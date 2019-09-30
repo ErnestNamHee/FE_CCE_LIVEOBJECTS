@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Service
+metadata:
+ annotations:
+   service.protal.kubernetes.io/access-ip: 90.84.195.132 # EIP. At least one node in the cluster has been bound to this EIP. 
+   service.protal.kubernetes.io/type: EIP                # Set the external access type to Elastic IP Address
+ labels:
+   app: nodered
+ name: nodered
+spec:
+ ports:
+ - name: service0
+   port: 30000 # Cluster virtual IP address access port, which has 
+   protocol: TCP
+   targetPort: 1880 # Container port set on the CCE console.
+ selector:
+   app: nodered
+ type: NodePort         # The EIP must be based on an NodePort service. 

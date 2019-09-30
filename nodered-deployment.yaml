@@ -1,0 +1,26 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+ name: nodered
+spec:
+ replicas: 1
+ selector:
+   matchLabels:
+     app: nodered
+ strategy:
+   type: RollingUpdate
+ template:
+   metadata:
+     labels:
+       app: nodered
+   spec:
+     containers:
+     - image: nodered/node-red-docker
+       imagePullPolicy: Always
+       name: nodered
+       resources: 
+           requests:
+              cpu: 2
+              memory: 2048Mi
+     imagePullSecrets:
+       - name: default-secret
