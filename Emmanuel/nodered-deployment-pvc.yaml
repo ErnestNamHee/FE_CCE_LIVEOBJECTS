@@ -18,14 +18,14 @@ spec:
      - image: nodered/node-red-docker
        imagePullPolicy: Always
        name: nodered
-       volumeMounts:        
+       volumeMounts:
        - mountPath: /data
          name: pvc-evs-nodered-cic
        resources: 
            requests:
               cpu: 2
               memory: 4096Mi
-      volumes:
+     volumes:
      - name: pvc-evs-nodered-cic
        persistentVolumeClaim:
           claimName: cce-evs-nodered-cic
