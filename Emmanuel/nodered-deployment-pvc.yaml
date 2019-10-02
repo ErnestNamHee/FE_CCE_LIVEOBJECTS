@@ -31,6 +31,3 @@ spec:
           claimName: cce-evs-nodered-cic
      imagePullSecrets:
        - name: default-secret
-
-     imagePullSecrets:
-       - name: default-secret
