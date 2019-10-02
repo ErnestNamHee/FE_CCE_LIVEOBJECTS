@@ -1,0 +1,48 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+ name: mariadb-cic
+spec:
+ replicas: 1
+ selector:
+   matchLabels:
+     app: mariadb-cic
+ strategy:
+   type: RollingUpdate
+ template:
+   metadata:
+     labels:
+       app: mariadb-cic
+   spec:
+     containers:
+     - image: mariadb
+       imagePullPolicy: Always
+       name: mariadb
+       volumeMounts:        
+       - mountPath: /var/lib/mysql
+         name: pvc-evs-mariadb-cic
+       env:
+          - name: MYSQL_ROOT_PASSWORD
+            valueFrom:
+               secretKeyRef:
+                  name: mariadb-secret
+                  key: root_password
+          - name: MYSQL_DATABASE
+            value: liveobjects
+          - name: MYSQL_USER
+            value: ciccd
+          - name: MYSQL_PASSWORD
+            valueFrom:
+               secretKeyRef:
+                  name: mariadb-secret
+                  key: mysql_password
+       resources: 
+           requests:
+              cpu: 1
+              memory: 2048Mi
+     volumes:
+     - name: pvc-evs-mariadb-cic
+       persistentVolumeClaim:
+          claimName: cce-evs-mariadb-cic
+     imagePullSecrets:
+       - name: default-secret

@@ -1,0 +1,26 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+ name: adminer-cic
+spec:
+ replicas: 1
+ selector:
+   matchLabels:
+     app: adminer-cic
+ strategy:
+   type: RollingUpdate
+ template:
+   metadata:
+     labels:
+       app: adminer-cic
+   spec:
+     containers:
+     - image: adminer
+       imagePullPolicy: Always
+       name: adminer
+       resources: 
+           requests:
+              cpu: 1
+              memory: 1024Mi
+     imagePullSecrets:
+       - name: default-secret
